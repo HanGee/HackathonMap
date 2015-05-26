@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Hackathon Taiwan: Hackathon Map</title>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src='http://code.jquery.com/jquery-git2.min.js'></script>
+		<script>
+			$(function() {
+				var listUrl = 'https://spreadsheets.google.com/feeds/list/1wt8JVUmTEmwBPRqPI_ZjMxjjNNDNpcLUGwxhCXzJlHY/otnjarj/public/values?alt=json';
+
+				var map = L.map('map').setView([23.5,121.518508], 8);
+
+				$.getJSON(listUrl, function(data) {
+					console.log(data.feed.entry);
+					for (var index in data.feed.entry) {
+						var event = data.feed.entry[index];
+						console.log(event['gsx$name'].$t);
+						console.log(event['gsx$startdate'].$t);
+						console.log(event['gsx$registration'].$t);
+						console.log(event['gsx$location'].$t);
+						console.log(event['gsx$latlng'].$t);
+
+						// Add a marker
+						L.marker(event['gsx$latlng'].$t.split(',')).addTo(map)
+							.bindPopup(event['gsx$name'].$t)
+							.openPopup();
+					}
+				})
+
+
+				// add an OpenStreetMap tile layer
+				//L.tileLayer('http://{s}.tile.osm.org/hot/{z}/{x}/{y}.png', {
+				L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+					attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				}).addTo(map);
+			});
+		</script>
+	</head>
+	<body>
+		 <div id="map" style="height: 100%;"></div>
+	</body>
+</html>
