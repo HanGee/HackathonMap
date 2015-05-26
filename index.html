@@ -1,6 +1,8 @@
 <html>
 	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Hackathon Taiwan: Hackathon Map</title>
+		<meta charset="utf-8" />
 		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 		<script src='http://code.jquery.com/jquery-git2.min.js'></script>
@@ -21,16 +23,22 @@
 						console.log(event['gsx$latlng'].$t);
 
 						// Add a marker
+						var title = '<h3>' + event['gsx$name'].$t + '</h3>';
+						var desc = event['gsx$desc'].$t.replace(/\n/g, '<br />');
+						var startdate = '- 活動日期：' + event['gsx$startdate'].$t.split(' ')[0] + '';
+						var loc = '- 活動地點：' + event['gsx$location'].$t + '';
+						var registration = '<a href="' + event['gsx$registration'].$t + '">立即線上報名</a>';
+						var website = '<a href="' + event['gsx$website'].$t + '">更多活動資訊</a>';
 						L.marker(event['gsx$latlng'].$t.split(',')).addTo(map)
-							.bindPopup(event['gsx$name'].$t)
+							.bindPopup(title + '<br />' + startdate + '<br />' + loc + '<br /><br />' + desc + '<br /><br />' + registration + ' | ' + website)
 							.openPopup();
 					}
 				})
 
 
 				// add an OpenStreetMap tile layer
-				//L.tileLayer('http://{s}.tile.osm.org/hot/{z}/{x}/{y}.png', {
-				L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+				L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+//				L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
 					attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				}).addTo(map);
 			});
