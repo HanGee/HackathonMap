@@ -3,17 +3,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Hackathon Taiwan: Hackathon Map</title>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		<link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 		<link rel="stylesheet" href="pin.css" />
-		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-		<script src='http://code.jquery.com/jquery-git2.min.js'></script>
+		<script src="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src='https://code.jquery.com/jquery-git2.min.js'></script>
 		<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.css' rel='stylesheet' />
 		<script>
 			$(function() {
 				var listUrl = 'https://spreadsheets.google.com/feeds/list/1wt8JVUmTEmwBPRqPI_ZjMxjjNNDNpcLUGwxhCXzJlHY/otnjarj/public/values?alt=json';
 				//var tileUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
-				var tileUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg';
+				var tileUrl = 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg';
 
 				var map = L.map('map').setView([23.5,121.518508], 9);
 				var osm2 = new L.TileLayer(tileUrl, { subdomains: '1234', minZoom: 0, maxZoom: 13, zoomLevelOffset: -1 });
@@ -27,7 +27,7 @@
 				});
 
 				$.getJSON(listUrl, function(data) {
-					console.log(data.feed.entry);
+					//console.log(data.feed.entry);
 					var bounds = [];
 
 					for (var index in data.feed.entry) {
@@ -63,7 +63,7 @@
 				L.tileLayer(tileUrl, {
 					subdomains: '1234',
 //				L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-					attribution: '<a href="http://hackathon.tw/">黑客松台灣 Hackathon Taiwan</a> | &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+					attribution: '<a href="https://hackathon.tw/">黑客松台灣 Hackathon Taiwan</a> | &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				}).addTo(map);
 			});
 		</script>
