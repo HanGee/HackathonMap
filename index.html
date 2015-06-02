@@ -3,9 +3,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Hackathon Taiwan: Hackathon Map</title>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 		<link rel="stylesheet" href="pin.css" />
-		<script src="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 		<script src='https://code.jquery.com/jquery-git2.min.js'></script>
 		<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.js'></script>
 		<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.css' rel='stylesheet' />
@@ -13,7 +13,7 @@
 			$(function() {
 				var listUrl = 'https://spreadsheets.google.com/feeds/list/1wt8JVUmTEmwBPRqPI_ZjMxjjNNDNpcLUGwxhCXzJlHY/otnjarj/public/values?alt=json';
 				//var tileUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
-				var tileUrl = 'https://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg';
+				var tileUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg';
 
 				var map = L.map('map').setView([23.5,121.518508], 9);
 				var osm2 = new L.TileLayer(tileUrl, { subdomains: '1234', minZoom: 0, maxZoom: 13, zoomLevelOffset: -1 });
