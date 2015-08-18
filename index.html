@@ -1,10 +1,12 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Hackathon Taiwan: Hackathon Map</title>
+		<title>Hackathon Taiwan: 台灣的黑客松活動地圖</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="pin.css" />
+		<link rel="stylesheet" href="past-pin.css" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 		<script src='https://code.jquery.com/jquery-git2.min.js'></script>
 		<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.js'></script>
@@ -18,6 +20,13 @@
 				var map = L.map('map').setView([23.5,121.518508], 9);
 				var osm2 = new L.TileLayer(tileUrl, { subdomains: '1234', minZoom: 0, maxZoom: 13, zoomLevelOffset: -1 });
 				var miniMap = new L.Control.MiniMap(osm2).addTo(map);
+
+				var pastIcon = L.divIcon({
+					iconSize: [ 60, 60 ],
+					iconAnchor: [ 30, 60 ],
+					className: 'pin-icon',
+					html: '<div class="past-pin"></div><div class="pulse"></div>'
+				});
 
 				var icon = L.divIcon({
 					iconSize: [ 60, 60 ],
@@ -35,7 +44,6 @@
 						var pos = event['gsx$latlng'].$t.split(',');
 						pos[0] = parseFloat(pos[0]);
 						pos[1] = parseFloat(pos[1]);
-						bounds.push(pos);
 /*
 						console.log(event['gsx$name'].$t);
 						console.log(event['gsx$startdate'].$t);
@@ -43,6 +51,7 @@
 						console.log(event['gsx$location'].$t);
 						console.log(event['gsx$latlng'].$t);
 */
+						(function() {
 						// Add a marker
 						var title = '<h3>' + event['gsx$name'].$t + '</h3>';
 						var desc = event['gsx$desc'].$t.replace(/\n/g, '<br />');
@@ -51,8 +60,17 @@
 						var addr = '- 完整地址：' + event['gsx$address'].$t + '';
 						var registration = '<a href="' + event['gsx$registration'].$t + '">立即線上報名</a>';
 						var website = '<a href="' + event['gsx$website'].$t + '">更多活動資訊</a>';
-						L.marker(pos, { icon: icon }).addTo(map)
-							.bindPopup(title + '<br />' + startdate + '<br />' + loc + '<br />' + addr + '<br /><br />' + desc + '<br /><br />' + registration + ' | ' + website, { offset: [ -5, -15 ] });
+
+						if (Date.now() > Date.parse(event['gsx$startdate'].$t.split(' ')[0])) {
+							bounds.splice(0, 0, pos);
+							L.marker(pos, { icon: pastIcon }).addTo(map)
+								.bindPopup(title + '<br />' + startdate + '<br />' + loc + '<br />' + addr + '<br /><br />' + desc + '<br /><br />' + registration + ' | ' + website, { offset: [ -5, -15 ] });
+						} else {
+							bounds.push(pos);
+							L.marker(pos, { icon: icon }).addTo(map)
+								.bindPopup(title + '<br />' + startdate + '<br />' + loc + '<br />' + addr + '<br /><br />' + desc + '<br /><br />' + registration + ' | ' + website, { offset: [ -5, -15 ] });
+						}
+						})();
 					}
 
 					map.fitBounds(bounds);
@@ -69,6 +87,16 @@
 		</script>
 	</head>
 	<body>
-		 <div id="map" style="height: 100%;"></div>
+		<div id="header" style='height: 30px;'>
+			台灣的黑客松活動地圖
+			<div style="position: absolute; right: 0px; top: 0px; font-size: 14px; line-height: 30px; color: ;">
+				<span>你正在籌辦黑客松活動嗎？<span>
+				<a href="http://goo.gl/forms/euho7AJSma"><button style="border: 0px; background: #00cc88; color: white; text-shadow: 0 0 1px rgba(0,0,0,.5);">立即登記</button></a>
+			</div>
+		</div>
+		<div id="map" style="height: 100%;"></div>
+		<div id="logo">
+			<a href="https://hackathon.tw/"><img src="https://hackathon.tw/images/hackathontw.png" border="0"></a>
+		</div>
 	</body>
 </html>
