@@ -19,8 +19,8 @@
 				//var tileUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 				var tileUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpg';
 
-				var map = L.map('map').setView([23.5,121.518508], 9);
-				var osm2 = new L.TileLayer(tileUrl, { subdomains: '1234', minZoom: 0, maxZoom: 13, zoomLevelOffset: -1 });
+				var map = L.map('map').setView([23.5,121.518508], 8);
+				var osm2 = new L.TileLayer(tileUrl, { subdomains: '1234', minZoom: 5, detectRetina: true });
 				var miniMap = new L.Control.MiniMap(osm2).addTo(map);
 
 				var pastIcon = L.divIcon({
@@ -75,7 +75,7 @@
 						})();
 					}
 
-					map.fitBounds(bounds);
+					map.fitBounds(bounds, { padding: [ 100, 100 ] });
 				})
 
 
