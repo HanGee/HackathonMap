@@ -63,7 +63,7 @@
 						var registration = '<a href="' + event['gsx$registration'].$t + '">立即線上報名</a>';
 						var website = '<a href="' + event['gsx$website'].$t + '">更多活動資訊</a>';
 
-						if (Date.now() > Date.parse(event['gsx$startdate'].$t.split(' ')[0])) {
+						if (Date.now() - 86400000 > Date.parse(event['gsx$startdate'].$t.split(' ')[0])) {
 							bounds.splice(0, 0, pos);
 							L.marker(pos, { icon: pastIcon }).addTo(map)
 								.bindPopup(title + '<br />' + startdate + '<br />' + loc + '<br />' + addr + '<br /><br />' + desc + '<br /><br />' + registration + ' | ' + website, { offset: [ -5, -15 ] });
